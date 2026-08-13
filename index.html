@@ -1,11 +1,79 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وضعیت آب و هوا</title>
+    <title>Weather Information</title>
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
     
+    <div class="card">
+        <div class="search">
+            <div class="search-box">
+                <button><img src="/img/images.jpg"></button>
+                <input type="text" placeholder="شهر مورد نظر را وارد کنید">
+            </div>
+        </div>
+
+        <div class="Weather">
+            <img class="Weather-img" src="/icons/Clear-Day.svg">
+            <h1 class="temp">17°C</h1>
+            <h2 class="city">Tehran</h2>
+        </div>
+
+        <div class="details">
+            <div class="col">
+                <img src="/icons/Atmosphere.png">
+                <div>
+                    <p class="humidity">32%</p>
+                    <p>رطوبت</p>
+                </div>
+            </div>
+            <div class="col">
+                    <img src="/icons/Atmosphere.png">
+                <div>
+                    <p class="wind">3 km/h</p>
+                    <p>سرعت باد</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const apiKey = "dd13e6f91cd5003d5d8febde22e0da91";
+        const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&q=';
+        
+        const searchBox= document.querySelector(".search input");
+        const searchBtn= document.querySelector(".search button");
+        const weatherImg= document.querySelector("wether-img");
+
+        async function chechWeather(city){
+            const response= await fetch(apiUrl + city + `&appid=${apiKey}`);
+            var data= await response.json();
+
+            console.log(data);
+
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp)+'°C' ;
+            document.querySelector(".humidity").innerHTML = data.main.humidity + '%';
+            document.querySelector(".wind").innerHTML = Math.round(data.wind.speed)  + 'km/s';
+        }
+        
+
+        //if(data.weather[0].main == "clear"){
+
+        //}
+        
+        
+
+        searchBtn.addEventListener("click" , ()=>{
+            chechWeather(searchBox.value);
+        }
+        )
+
+        console.log(wind);
+
+    </script>
 </body>
 </html>
